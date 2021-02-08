@@ -29,7 +29,6 @@ namespace CSV
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.jobGridView = new System.Windows.Forms.DataGridView();
             this.tbSalary = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
@@ -47,7 +46,6 @@ namespace CSV
             this.tscmbJob = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tstboxSearch = new System.Windows.Forms.ToolStripTextBox();
-            this.tsbtnSearch = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.jobGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSalary)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -101,8 +99,7 @@ namespace CSV
             this.toolStripLabel3,
             this.tscmbJob,
             this.toolStripSeparator4,
-            this.tstboxSearch,
-            this.tsbtnSearch});
+            this.tstboxSearch});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(946, 25);
@@ -175,15 +172,6 @@ namespace CSV
             this.tstboxSearch.Name = "tstboxSearch";
             this.tstboxSearch.Size = new System.Drawing.Size(100, 25);
             // 
-            // tsbtnSearch
-            // 
-            this.tsbtnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsbtnSearch.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnSearch.Image")));
-            this.tsbtnSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnSearch.Name = "tsbtnSearch";
-            this.tsbtnSearch.Size = new System.Drawing.Size(45, 22);
-            this.tsbtnSearch.Text = "Найти";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -222,7 +210,6 @@ namespace CSV
         private System.Windows.Forms.ToolStripComboBox tscmbJob;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripTextBox tstboxSearch;
-        private System.Windows.Forms.ToolStripButton tsbtnSearch;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }

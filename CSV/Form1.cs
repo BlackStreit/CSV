@@ -46,13 +46,14 @@ namespace CSV
             tsBtnOpen.Click += tsBtnOpenClick;
             tscmbRegion.SelectedIndexChanged += tscmbRegionSelectedIndexChanged;
             tscmbJob.SelectedIndexChanged += tscmbJobSelectedIndexChanged;
-            tsbtnSearch.Click += tsbtnSearchClick;
+            tstboxSearch.TextChanged += TstboxSearch_TextChanged;
         }
 
-        private void tsbtnSearchClick(object sender, EventArgs e)
+        private void TstboxSearch_TextChanged(object sender, EventArgs e)
         {
             UpdateTable();
         }
+
 
         private void tscmbJobSelectedIndexChanged(object sender, EventArgs e)
         {
@@ -98,10 +99,10 @@ namespace CSV
 
             if (!tstboxSearch.Text.Equals(""))
             {
-                query = query.Where(jobItem => jobItem.JobName.ToLower().Equals(tstboxSearch.Text.ToLower()) ||
-                jobItem.Industry.ToLower().Equals(tstboxSearch.Text.ToLower()) || 
-                jobItem.SalaryTotal.ToString().Equals(tstboxSearch.Text) ||
-                jobItem.Region.ToLower().Equals(tstboxSearch.Text.ToLower()));
+                query = query.Where(jobItem => jobItem.JobName.ToLower().Contains(tstboxSearch.Text.ToLower()) ||
+                jobItem.Industry.ToLower().Contains(tstboxSearch.Text.ToLower()) || 
+                jobItem.SalaryTotal.ToString().Contains(tstboxSearch.Text) ||
+                jobItem.Region.ToLower().Contains(tstboxSearch.Text.ToLower()));
 
             }
             jobGridView.DataSource = query.ToList();
