@@ -17,6 +17,7 @@ namespace CSV
         public Form1()
         {
             InitializeComponent();
+            openCSV.Filter = "*csv filter(*.csv) | *.csv";
             try
             {
                 jobs = JobItems.LoadFile(fileName);
@@ -46,42 +47,65 @@ namespace CSV
             UpdateTracks();
             UpdateTable();
 
-            openCSV.Filter = "*csv filter(*.csv) | *.csv";
+            tsBtnOpen.Click += tsBtnOpenClick;
+            tscmbRegion.SelectedIndexChanged += tscmbRegionSelectedIndexChanged;
+            tscmbJob.SelectedIndexChanged += tscmbJobSelectedIndexChanged;
+            tsbtnSearch.Click += tsbtnSearchClick;
+        }
+
+        private void tsbtnSearchClick(object sender, EventArgs e)
+        {
+            UpdateTable();
+        }
+
+        private void tscmbJobSelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateTable();
+        }
+
+        private void tscmbRegionSelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateTable();
+        }
+
+        private void tsBtnOpenClick(object sender, EventArgs e)
+        {
+            OpenFile();
         }
 
         public void UpdateCombos()
         {
-            cmbRegion.Items.Clear();
-            cmbJob.Items.Clear();
+            tscmbJob.Items.Clear();
+            tscmbRegion.Items.Clear();
 
             var regionsList = jobs.Select(jobItem => jobItem.Region).Distinct().OrderBy(x => x);
             var jobList = jobs.Select(jobItem => jobItem.JobName).Distinct().OrderBy(x => x);
 
-            cmbRegion.Items.AddRange(regionsList.ToArray());
-            cmbJob.Items.AddRange(jobList.ToArray());
+            tscmbJob.Items.AddRange(jobList.ToArray());
+            tscmbRegion.Items.AddRange(regionsList.ToArray());
         }
 
         public void UpdateTable()
         {
             var query = jobs.AsEnumerable(); 
-            if (!cmbRegion.Text.Equals(""))
+            if (!tscmbRegion.Text.Equals(""))
             {
-                query = query.Where(jobItem => jobItem.Region.Equals(cmbRegion.Text));
+                query = query.Where(jobItem => jobItem.Region.Equals(tscmbRegion.Text));
             }
 
-            if (!cmbJob.Text.Equals(""))
+            if (!tscmbJob.Text.Equals(""))
             {
-                query = query.Where(jobItem => jobItem.JobName.Equals(cmbJob.Text));
+                query = query.Where(jobItem => jobItem.JobName.Equals(tscmbJob.Text));
             }
 
             query = query.Where(jobItem => jobItem.SalaryTotal >= tbSalary.Value);
 
-            if (!tboxSearch.Text.Equals(""))
+            if (!tstboxSearch.Text.Equals(""))
             {
-                query = query.Where(jobItem => jobItem.JobName.ToLower().Equals(tboxSearch.Text.ToLower()) ||
-                jobItem.Industry.ToLower().Equals(tboxSearch.Text.ToLower()) || 
-                jobItem.SalaryTotal.ToString().Equals(tboxSearch.Text) ||
-                jobItem.Region.ToLower().Equals(tboxSearch.Text.ToLower()));
+                query = query.Where(jobItem => jobItem.JobName.ToLower().Equals(tstboxSearch.Text.ToLower()) ||
+                jobItem.Industry.ToLower().Equals(tstboxSearch.Text.ToLower()) || 
+                jobItem.SalaryTotal.ToString().Equals(tstboxSearch.Text) ||
+                jobItem.Region.ToLower().Equals(tstboxSearch.Text.ToLower()));
 
             }
             jobGridView.DataSource = query.ToList();
@@ -94,10 +118,6 @@ namespace CSV
             label1.Text = $"{tbSalary.Value}";
         }
 
-        private void cmbRegion_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateTable();
-        }
 
         private void tbSalary_Scroll(object sender, EventArgs e)
         {
@@ -105,10 +125,6 @@ namespace CSV
             UpdateTable();
         }
 
-        private void btnOpenCSV_Click(object sender, EventArgs e)
-        {
-            OpenFile();
-        }
         public void OpenFile()
         {
             if (openCSV.ShowDialog() == DialogResult.Cancel)
@@ -117,10 +133,6 @@ namespace CSV
             }
             fileName = openCSV.FileName;
             jobs = JobItems.LoadFile(fileName);
-        }
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            UpdateTable();
         }
     }
 }
